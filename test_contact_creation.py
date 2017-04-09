@@ -11,11 +11,9 @@ class test_contact_creation(unittest.TestCase):
     
     def test_test_contact_creation(self):
         wd = self.wd
-        self.open_home_page(wd)
         self.login(wd, username="admin", password="secret")
         self.create_contact(wd, Contact(firstname="firstname", middlename="middlename", lastname="lastname", nickname="nickname",
                             title="title", company="company", company_address="address"))
-        self.return_to_home_page(wd)
         self.logout(wd)
 
     def logout(self, wd):
@@ -96,8 +94,10 @@ class test_contact_creation(unittest.TestCase):
         wd.find_element_by_name("theform").click()
         # submit contact creation
         wd.find_element_by_xpath("//div[@id='content']/form/input[21]").click()
+        self.return_to_home_page(wd)
 
     def login(self, wd, username, password):
+        self.open_home_page(wd)
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
         wd.find_element_by_name("user").send_keys(username)
